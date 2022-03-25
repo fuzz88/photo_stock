@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
+from health.views import Check
+from photos.views import Photos
+from telegram_bot.views import WebHook
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    path("health/", Check.as_view()),
+    path("webhook/", csrf_exempt(WebHook.as_view())),
+    path("photos/", Photos.as_view()),
 ]
