@@ -26,11 +26,11 @@ class UploadedPhoto(models.Model):
         try:
             bot_token = os.environ["BOT_TOKEN"]
             resp = requests.get(
-                f"https://api.telegram.org/{ bot_token }/getFile?file_id={ file_id }"
+                f"https://api.telegram.org/bot{bot_token}/getFile?file_id={file_id}"
             )
             file_path = json.loads(resp.content).get("result").get("file_path")
             return requests.get(
-                f"https://api.telegram.org/file/{ bot_token }/{ file_path }"
+                f"https://api.telegram.org/file/bot{bot_token}/{file_path}"
             ).content
         except Exception as e:
             logger.exception(e)
