@@ -1,7 +1,6 @@
 import base64
 from django.db import models
 from telegram_bot.models import UploadedPhoto
-import base64
 
 
 class UserPhoto(models.Model):

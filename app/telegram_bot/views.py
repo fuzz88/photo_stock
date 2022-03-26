@@ -1,9 +1,12 @@
+import json
+import logging
+
 from django.http import HttpResponse
 from django.views import View
 
-import json
-
 from telegram_bot.models import UploadedPhoto
+
+logger = logging.getLogger("web_hook")
 
 
 class WebHook(View):
@@ -21,6 +24,6 @@ class WebHook(View):
                     )
                     UploadedPhoto.on_new_photo.send(saved)
         except Exception as e:
-            print(e)
+            logger.exception(e)
         finally:
             return HttpResponse(status=200)

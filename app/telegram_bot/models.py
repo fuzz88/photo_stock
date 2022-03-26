@@ -1,11 +1,13 @@
-import os
-import sys
-from django.db import models
-import requests
 import json
+import os
+import logging
 
 import django.dispatch
+import requests
+from django.db import models
 
+
+logger = logging.getLogger("uploaded_photo")
 
 
 class UploadedPhoto(models.Model):
@@ -22,13 +24,13 @@ class UploadedPhoto(models.Model):
     @staticmethod
     def download_binary(file_id) -> bytes:
         try:
-            bot_token = os.environ['BOT_TOKEN']
+            bot_token = os.environ["BOT_TOKEN"]
             resp = requests.get(
-                f"https://api.telegram.org/{ bot_token }/getFile?file_id={file_id}"
+                f"https://api.telegram.org/{ bot_token }/getFile?file_id={ file_id }"
             )
             file_path = json.loads(resp.content).get("result").get("file_path")
             return requests.get(
-                f"https://api.telegram.org/file/{ bot_token }/{file_path}"
+                f"https://api.telegram.org/file/{ bot_token }/{ file_path }"
             ).content
         except Exception as e:
-            print(e)
+            logger.exception(e)
