@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: photo-stock
-  labels:  
+  labels:
     app: photo-stock
 spec:
   containers:
